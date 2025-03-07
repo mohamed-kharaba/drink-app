@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { About, Landing, Cocktail, NewsLetter, HomeLayout, Error } from "./pages";
+import { About, Landing, Cocktail, NewsLetter, HomeLayout, Error, SinglePageError } from "./pages";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({});
 
 const router = createBrowserRouter([
     {
@@ -11,6 +14,7 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Landing />,
+                errorElement: <SinglePageError />,
             },
             {
                 path: "cocktail",
@@ -39,6 +43,10 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-    return <RouterProvider router={router}></RouterProvider>;
+    return (
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router}></RouterProvider>
+        </QueryClientProvider>
+    );
 };
 export default App;
