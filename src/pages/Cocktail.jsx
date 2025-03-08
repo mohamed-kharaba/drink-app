@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+import Wrapper from "../assets/wrappers/CocktailPage";
 
 const singleCocktailUrl = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
 

@@ -19,8 +19,8 @@ const Landing = () => {
         },
     });
 
-    if (isLoading) return <h5>Loading...</h5>;
-    if (error) return <h5>Error: {error.message}</h5>;
+    if (isLoading) return <div className="loading"></div>;
+    if (error) return <div className="error">Error: {error.message}</div>;
 
     return (
         <>

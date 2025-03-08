@@ -3,7 +3,6 @@ import Wrapper from "../assets/wrappers/CocktailList";
 import CocktailCard from "./CocktailCard";
 
 const CocktailList = ({ drinks }) => {
-    console.log(drinks);
     if (!drinks || !Array.isArray(drinks) || drinks.length === 0) {
         return <h4 style={{ textAlign: "center" }}>No matching cocktails found...</h4>;
     }
