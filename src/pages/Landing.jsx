@@ -1,32 +1,35 @@
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-
 import CocktailList from "../components/CocktailList";
+import SearchForm from "../components/SearchForm";
+import { useQuery } from "@tanstack/react-query";
 
 const cocktailSearchUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
 const Landing = () => {
-    const {
-        data: drinks,
-        isLoading,
-        error,
-    } = useQuery({
-        queryKey: ["drinks"],
+    const [searchParams] = useSearchParams();
+    const searchTerm = searchParams.get("search") || "";
+
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["search", searchTerm || "all"],
         queryFn: async () => {
-            const searchTerm = "a";
-            const response = await axios.get(`${cocktailSearchUrl}${searchTerm}`);
-            return response.data.drinks;
+            const response = await axios.get(`${cocktailSearchUrl}${searchTerm || "all"}`);
+            return response.data.drinks || [];
         },
     });
 
-    if (isLoading) return <div className="loading"></div>;
-    if (error) return <div className="error">Error: {error.message}</div>;
+    if (isLoading) return <div className="loading" />;
+
+    if (error) return <div className="error">Error fetching data</div>;
 
     return (
         <>
-            <CocktailList drinks={drinks} />
+            <SearchForm searchTerm={searchTerm} />
+            <CocktailList drinks={data} />
         </>
     );
 };
 
 export default Landing;
+// import { useLoaderDat
